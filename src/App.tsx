@@ -2,17 +2,8 @@ import { useEffect, useRef } from 'react'
 
 import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
-import {
-  Box,
-  Gltf,
-  OrbitControls,
-  ShapeProps,
-  Environment,
-  DragControls,
-  Shadow,
-  SoftShadows,
-} from '@react-three/drei'
-import appleGlb from './assets/apple.glb'
+import { Gltf, OrbitControls, SoftShadows } from '@react-three/drei'
+// import appleGlb from './assets/apple.glb'
 import heartGlb from './assets/props_heart.glb'
 import classNames from 'classnames'
 import { useDesc } from 'DescContext'
@@ -38,23 +29,23 @@ const blendModes = [
   'mix-blend-plus-lighter',
 ]
 
-const AppleComponent = () => {
-  const ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null)
-  return (
-    <Gltf
-      ref={ref}
-      src={appleGlb}
-      scale={0.01}
-      position={[0.35, -0, -0.3]}
-      rotation={[0, 0, 0]}
-      castShadow
-    />
-  )
-}
+// const AppleComponent = () => {
+//   const ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null)
+//   return (
+//     <Gltf
+//       ref={ref}
+//       src={appleGlb}
+//       scale={0.01}
+//       position={[0.35, -0, -0.3]}
+//       rotation={[0, 0, 0]}
+//       castShadow
+//     />
+//   )
+// }
 
 const HeartComponent = () => {
   const ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null)
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     ref.current!.rotation.y += delta
     // ref.current!.scale.x *= Math.sin(Math.PI)
   })
@@ -68,24 +59,6 @@ const HeartComponent = () => {
       castShadow
       receiveShadow
     />
-  )
-}
-
-const DreiBox = (props?: ShapeProps<THREE.BoxGeometry>) => {
-  const boxRef = useRef<THREE.Mesh>(null)
-
-  return (
-    <Box
-      {...props}
-      ref={boxRef}
-      args={[2, 0.01, 2]}
-      rotation={[0, Math.PI / 4, 0]}
-      position={[0, -1.2, 0]}
-      castShadow
-      receiveShadow
-    >
-      <meshStandardMaterial color={0xffffff} />
-    </Box>
   )
 }
 
@@ -113,7 +86,7 @@ const Apateu = ({ className }: { className: string }) => {
 const Scene = () => {
   const ambientRef = useRef<THREE.AmbientLight>(null)
   const meshRef = useRef<THREE.MeshStandardMaterial>(null)
-  useFrame(({ clock }, delta) => {
+  useFrame(({ clock }, _delta) => {
     const on = Math.floor(clock.elapsedTime * 2.45) % 2
     ambientRef.current!.color = new THREE.Color(on ? 'maroon' : 'white')
     // meshRef.current!.color = new THREE.Color(on ? 'black' : 'white')
