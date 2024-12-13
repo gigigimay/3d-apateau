@@ -1,13 +1,6 @@
-# gigigimay.github.io
+# 3D Apateau
 
-May's portfolio!
-
-## Deployment
-
-This script will build the app and deploy to `master` branch
-```
-yarn deploy
-```
+An experimental webapp in the theme of "APT.", song from Rosé and Bruno Mars. This project plays with WebGL, Three.js, and mix-blend-mode CSS.
 
 # React + TypeScript + Vite
 
