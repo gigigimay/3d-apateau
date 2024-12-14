@@ -5,7 +5,7 @@ import { AppOverlay } from 'AppOverlay'
 const App = () => {
   return (
     <div className="fixed inset-0">
-      <Canvas shadows camera={{ fov: 30, position: [0, 1, 5] }}>
+      <Canvas shadows camera={{ fov: 40, position: [0, 1, 5] }}>
         <AppScene />
       </Canvas>
       <AppOverlay />

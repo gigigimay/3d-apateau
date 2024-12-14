@@ -6,6 +6,9 @@ import { blendModes } from 'utils'
 
 const Apateu = ({ className }: { className: string }) => {
   const { setDesc, setBlendMode, blendMode } = useDesc()
+
+  const active = blendMode === className
+
   return (
     <button
       id={`btn-${className}`}
@@ -15,13 +18,13 @@ const Apateu = ({ className }: { className: string }) => {
         'rounded-md px-2',
         'hover:scale-110',
         'focus:outline-dotted focus:outline-current focus:outline-4',
-        blendMode === className && '!mix-blend-normal text-black'
+        active && '!mix-blend-normal text-black'
       )}
       onMouseEnter={() => setDesc(className)}
       onMouseLeave={() => setDesc('')}
       onClick={() => setBlendMode(className)}
     >
-      {blendMode === className && '> '}apateu
+      {active && '> '}apateu
     </button>
   )
 }

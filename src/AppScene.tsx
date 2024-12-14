@@ -5,14 +5,13 @@ import { useFrame } from '@react-three/fiber'
 import { Environment, OrbitControls, SoftShadows } from '@react-three/drei'
 import { getBeatDuration, getBouncingValue, getNthBar, getNthBeat } from 'utils'
 import { Heart } from 'Heart'
-
-const BPM = 149 // APT song
+import { BPM, primaryColor } from 'config'
 
 const AnimatedHeart = () => {
   const ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null)
 
   useFrame(({ clock }, delta) => {
-    ref.current!.rotation.y += delta
+    ref.current!.rotation.y += delta / 2
 
     const time = clock.elapsedTime + getBeatDuration(BPM) * 0.25
     const bar = getNthBar(time, BPM)
@@ -27,12 +26,13 @@ const AnimatedHeart = () => {
       if (bar % 2 === 0) value *= -1
       const modifier = beat === 4 ? 0.75 : 1
       ref.current!.rotation.z = (value / 8) * modifier
+      ref.current!.position.y = 0.1
     } else {
       let value = getBouncingValue(time, BPM, beat === 3 ? 0 : undefined)
       ref.current!.rotation.z = 0
       if (beat === 2) value = 0
       const modifier = beat === 1 ? 1 : 0.9
-      ref.current!.position.y = (value / 12) * modifier
+      ref.current!.position.y = 0.1 + (value / 12) * modifier
       ref.current!.scale.y = 1 + (value / 15) * modifier
     }
   })
@@ -48,22 +48,24 @@ export const AppScene = () => {
   useFrame(({ clock }, _delta) => {
     const bar = getNthBar(clock.elapsedTime, BPM)
     ambientRef.current!.color = new THREE.Color(
-      bar % 2 === 0 ? 'black' : '#e15073'
+      bar % 2 === 0 ? 'black' : primaryColor
     )
-    // meshRef.current!.color = new THREE.Color(bar % 4 === 0 ? 'black' : 'white')
+    meshRef.current!.color = new THREE.Color(
+      bar % 4 === 0 ? 'black' : primaryColor
+    )
   })
 
   return (
     <>
       <OrbitControls />
       <fog ref={fogRef} attach="fog" args={['white', 0, 40]} />
-      <ambientLight ref={ambientRef} intensity={0.5} color="black" />
+      <ambientLight ref={ambientRef} intensity={0.5} />
       <directionalLight
         castShadow
-        position={[2.5, 8, 5]}
+        position={[2.5, 10, 5]}
         intensity={3}
-        shadow-mapSize={2048}
-        color="#e15073"
+        shadow-mapSize={1024}
+        color="white"
       >
         <orthographicCamera
           attach="shadow-camera"
@@ -76,7 +78,6 @@ export const AppScene = () => {
         intensity={1.5}
         color="violet"
       />
-      {/* <DreiBox /> */}
       <AnimatedHeart />
       <shadowMaterial />
       <SoftShadows />
@@ -85,11 +86,10 @@ export const AppScene = () => {
         position={[0, -1.5, 0]}
         receiveShadow
       >
-        <planeGeometry args={[100, 100]} />
-        {/* <shadowMaterial transparent opacity={1} /> */}
-        <meshStandardMaterial ref={meshRef} color="hotpink" />
+        <planeGeometry args={[200, 200]} />
+        <meshStandardMaterial ref={meshRef} />
       </mesh>
-      <Environment preset="apartment" environmentIntensity={0.5} />
+      <Environment preset="apartment" environmentIntensity={1} />
     </>
   )
 }

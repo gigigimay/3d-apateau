@@ -9,21 +9,36 @@ Title: Heart
 import { useGLTF } from '@react-three/drei'
 import { GroupProps } from '@react-three/fiber'
 import heartGlb from './assets/heart.glb'
-import { MeshPhysicalMaterial, Group, Object3DEventMap } from 'three'
+import { MeshPhysicalMaterial, Group, Object3DEventMap, BackSide } from 'three'
 import { forwardRef } from 'react'
 
-export const Heart = forwardRef<Group<Object3DEventMap>>(
-  (props: GroupProps, ref) => {
-    const { nodes, materials } = useGLTF(heartGlb)
+export const Heart = forwardRef<Group<Object3DEventMap>, GroupProps>(
+  (props, ref) => {
+    const { nodes, materials: _ } = useGLTF(heartGlb)
     return (
       <group {...props} ref={ref} dispose={null}>
-        <group scale={0.0045}>
+        <group scale={0.006}>
           <mesh
             castShadow
             receiveShadow
             geometry={(nodes.Cube__0 as any).geometry}
-            material={new MeshPhysicalMaterial({ color: 0xbe185d })}
             // material={materials['Scene_-_Root']}
+            // material={new MeshPhysicalMaterial({ color: 0xbe185d })}
+            material={
+              new MeshPhysicalMaterial({
+                metalness: 0.9,
+                roughness: 0.05,
+                envMapIntensity: 0.9,
+                clearcoat: 1,
+                transparent: true,
+                // transmission: .95,
+                opacity: 0.5,
+                reflectivity: 0.2,
+                // refractionRatio: 0.985,
+                ior: 0.9,
+                side: BackSide,
+              })
+            }
             rotation={[-Math.PI / 2, 0, 0]}
             scale={[100, 24.457, 100]}
           />
