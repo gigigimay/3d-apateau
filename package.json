@@ -12,7 +12,7 @@
     "deploy": "gh-pages -b master -d dist"
   },
   "dependencies": {
-    "@react-three/drei": "^9.117.3",
+    "@react-three/drei": "^9.120.4",
     "@react-three/fiber": "^8.17.10",
     "classnames": "^2.5.1",
     "lodash": "^4.17.21",
@@ -21,7 +21,7 @@
     "react-dom": "^18.3.1",
     "react-scroll-parallax": "^3.4.5",
     "styled-components": "^6.1.13",
-    "three": "^0.170.0"
+    "three": "^0.171.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
