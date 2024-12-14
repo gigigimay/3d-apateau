@@ -11,7 +11,7 @@ const AnimatedHeart = () => {
   const ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null)
 
   useFrame(({ clock }, delta) => {
-    ref.current!.rotation.y += delta / 2
+    ref.current!.rotation.y += delta / 3
 
     const time = clock.elapsedTime + getBeatDuration(BPM) * 0.25
     const bar = getNthBar(time, BPM)
