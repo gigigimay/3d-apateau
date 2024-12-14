@@ -111,7 +111,7 @@ export const AppOverlay = () => {
       <div
         className={classNames(
           'z-10 absolute left-0 bottom-0 p-8',
-          'text-2xl text-pink-700 font-extralight',
+          'text-2xl text-white font-extralight',
           'mix-blend-difference'
         )}
       >
